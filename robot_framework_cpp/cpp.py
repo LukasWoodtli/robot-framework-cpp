@@ -2,7 +2,8 @@ from ctypes import cdll, c_char_p
 
 class cpp:
     def __init__(self):
-        dynamic_library_file = r"C:\Users\wolu\robot-framework-cpp\cpp\cmake-build-debug\robot-framework-cpp.dll"
+        #dynamic_library_file = r"C:\Users\wolu\robot-framework-cpp\cpp\cmake-build-debug\robot-framework-cpp.dll"
+        dynamic_library_file = "/Users/luki/Development/robot-framework-cpp/cpp/build/librobot-framework-cpp.dylib"
         self.cpplib = cdll.LoadLibrary(dynamic_library_file)
 
     def get_keyword_names(self):
