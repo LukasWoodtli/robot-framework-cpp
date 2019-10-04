@@ -1,7 +1,12 @@
 project(robot-framework-cpp)
 
+cmake_minimum_required(VERSION 3.13)
+
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+
+add_subdirectory(test)
 
 add_library(robot-framework-cpp SHARED robot_framework_cpp.cpp)
 
