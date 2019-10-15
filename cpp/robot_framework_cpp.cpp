@@ -3,6 +3,7 @@
 #include "include/robotframeworkcpp.h"
 
 
-ROBOT_CPP_STEP(add, args, namedArgs) {
-    return args[0] + args[1];
+ROBOT_CPP_STEP(add) {
+    const auto ret = args[0] + args[1];
+    return ret.c_str();
 }

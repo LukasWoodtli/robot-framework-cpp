@@ -4,11 +4,12 @@
 #include <sstream>
 #include <algorithm>
 #include <map>
+#include <vector>
 #include <functional>
 #include <cstdlib>
 #include <iostream>
 
-#define ROBOT_CPP_STEP(name, args, namedArgs)
+#define ROBOT_CPP_STEP(name) char const * _robot_framework_cpp__##name(std::vector<std::string> args, std::map<std::string, std::string> namedArgs)
 
 namespace robotframeworkcpp {
 
@@ -116,12 +117,6 @@ namespace robotframeworkcpp {
 #define ROBOT_CPP_EXPORT_SYMBOL __attribute__((visibility("default")))
 #endif
 
-extern "C" {
-
-ROBOT_CPP_EXPORT_SYMBOL
-char const * get_keyword_names() {
-    return "add";
-}
 
 namespace {
         // inspired by:
@@ -145,5 +140,14 @@ namespace {
         }
 
 }
+
+
+extern "C" {
+
+ROBOT_CPP_EXPORT_SYMBOL
+char const * get_keyword_names() {
+    return "add";
+}
+
 }
 #endif /* CATCH_CONFIG_MAIN */

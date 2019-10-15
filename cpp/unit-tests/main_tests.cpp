@@ -1,5 +1,7 @@
 
 
+#define CATCH_CONFIG_MAIN
+#include <catch2/catch.hpp>
 #include "../include/robotframeworkcpp.h"
 
 
@@ -22,22 +24,21 @@
 
 
 
-int main() {
+TEST_CASE("Basic tests") {
     robotframeworkcpp::detail::input_data input;
+    
+    
     const auto stepResult1 = robotframeworkcpp::detail::runStepAndReturnString(testStep1, input);
 
-    if (stepResult1 != "hello")
-        return EXIT_FAILURE;
+    REQUIRE(stepResult1 == "hello");
 
 
     const auto stepResult2 = robotframeworkcpp::detail::runStepAndReturnString(testStep2, input);
 
-    if (stepResult2 != "3")
-        return EXIT_FAILURE;
+    REQUIRE(stepResult2 == "3");
 
 
     const auto stepResult3 = robotframeworkcpp::detail::runStepAndReturnString(testStep3, input);
 
-    if (stepResult3 != "")
-        return EXIT_FAILURE;
+    REQUIRE(stepResult3 == "");
 }
