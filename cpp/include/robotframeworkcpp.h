@@ -8,6 +8,7 @@
 #include <functional>
 #include <cstdlib>
 #include <iostream>
+#include <array>
 
 #define ROBOT_CPP_STEP(name) char const * _robot_framework_cpp__##name(std::vector<std::string> args, std::map<std::string, std::string> namedArgs)
 
@@ -104,10 +105,14 @@ namespace robotframeworkcpp {
 
                 return ret;
             }
-
-
         }
+
+
+    using stepDef = std::function<std::string(std::vector<std::string>)>;
+    void registerStepDef(std::string name, stepDef step);
+    std::string searchAndRunStep(std::string stepName, std::vector<std::string> args);
 }
+
 
 #ifdef ROBOT_CPP_CONFIG_MAIN
 
@@ -138,9 +143,23 @@ namespace {
 
             return str;
         }
-
 }
 
+
+namespace robotframeworkcpp {
+namespace {
+        std::map<std::string, stepDef> _stepDefDict;
+}
+
+void registerStepDef(std::string name, stepDef step) {
+    _stepDefDict[name] = step;
+}
+
+std::string searchAndRunStep(std::string stepName, std::vector<std::string> args) {
+    return _stepDefDict[stepName](args);
+}
+
+}
 
 extern "C" {
 

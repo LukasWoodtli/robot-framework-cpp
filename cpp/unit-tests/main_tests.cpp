@@ -2,6 +2,8 @@
 
 #define CATCH_CONFIG_MAIN
 #include <catch2/catch.hpp>
+
+#define ROBOT_CPP_CONFIG_MAIN
 #include "../include/robotframeworkcpp.h"
 
 
@@ -41,4 +43,28 @@ TEST_CASE("Basic tests") {
     const auto stepResult3 = robotframeworkcpp::detail::runStepAndReturnString(testStep3, input);
 
     REQUIRE(stepResult3 == "");
+}
+
+
+TEST_CASE("Test Add Step") {
+
+    robotframeworkcpp::registerStepDef("add", [](std::vector<std::string> args){return std::to_string(std::stoi(args[0]) + std::stoi(args[1]));});
+
+    SECTION("1+2=3")
+    {
+        std::vector<std::string> args{"1", "2"};
+        const auto res = robotframeworkcpp::searchAndRunStep("add", args);
+
+        REQUIRE(res == "3");
+    }
+}
+
+TEST_CASE("Test Mul Step") {
+
+    robotframeworkcpp::registerStepDef("mul", [](std::vector<std::string> args){return std::to_string(std::stoi(args[0]) * std::stoi(args[1]));});
+
+    std::vector<std::string> args{"3", "2"};
+    const auto res = robotframeworkcpp::searchAndRunStep("mul", args);
+
+    REQUIRE(res == "6");
 }
