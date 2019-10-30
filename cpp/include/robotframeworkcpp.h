@@ -10,7 +10,16 @@
 #include <iostream>
 #include <array>
 
-#define ROBOT_CPP_STEP(name) char const * _robot_framework_cpp__##name(std::vector<std::string> args, std::map<std::string, std::string> namedArgs)
+#define ROBOT_CPP_STEP(name, ...) \
+    std::string _robotframeworkcpp_##name##_function(); \
+    robotframeworkcpp::stepDef _robotframeworkcpp_##name##_lambda = [](std::vector<std::string>) -> std::string { \
+        return _robotframeworkcpp_##name##_function(); \
+    }; \
+    struct _robotframeworkcpp_##name##_static_init { \
+        _robotframeworkcpp_##name##_static_init() {robotframeworkcpp::registerStepDef(#name, _robotframeworkcpp_##name##_lambda);} \
+    }; \
+    _robotframeworkcpp_##name##_static_init _robotframeworkcpp_##name##_static_init_obj; \
+    std::string _robotframeworkcpp_##name##_function() // here comes the
 
 namespace robotframeworkcpp {
 
@@ -147,15 +156,14 @@ namespace {
 
 
 namespace robotframeworkcpp {
-namespace {
         std::map<std::string, stepDef> _stepDefDict;
-}
 
 void registerStepDef(std::string name, stepDef step) {
     _stepDefDict[name] = step;
 }
 
 std::string searchAndRunStep(std::string stepName, std::vector<std::string> args) {
+    // check if step is available in map
     return _stepDefDict[stepName](args);
 }
 
